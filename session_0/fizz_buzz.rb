@@ -1,3 +1,5 @@
+# Code By : Akshay Jain
+
 # Fizz Buzz is a word game for children to teach them about division.
 #
 # We will use it to learn about transforming traditional C-like for
@@ -36,6 +38,26 @@
 #
 # We will raise an `ArgumentError` exception to let the caller know that
 # their function arguments were incorrect.
+
 def fizz_buzz(n:, x: 3, y: 5)
-  raise NotImplementedError # TODO
+  if x<1 or y<1 or n<0
+    raise ArgumentError
+  end
+
+  fb_array = Array[]
+
+  for index in 1..n
+    if (index % x == 0) and (index % y == 0)
+      fb_array[index-1] = "FizzBuzz"
+    elsif index % x == 0
+      fb_array[index-1] = "Fizz"
+    elsif index % y == 0
+      fb_array[index-1] = "Buzz"
+    else
+      fb_array[index-1] = index.to_s()
+    end
+  end
+
+  return fb_array
+  # raise NotImplementedError # TODO
 end
