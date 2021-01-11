@@ -10,7 +10,7 @@ class Item
 
   # TODO: Store quantity
   attr_accessor :name, :price, :category_id, :discount_rate,
-    :discount_deadline, :quantity, :current_price
+    :discount_deadline, :quantity
 
   def initialize(name: '', price: 0, quantity: 1, category_id: 4,
                  discount_rate: 0, discount_deadline: Time.now)
