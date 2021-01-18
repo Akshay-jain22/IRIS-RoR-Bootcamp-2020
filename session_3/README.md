@@ -170,7 +170,7 @@ Since we want model, controllers and views for the Article class, we
 will use `rails scaffold` to get started.
 
 ```
-rails generate scaffold Article name:string content:text user_id:integer public:true
+rails generate scaffold Article title:string topic:string tags:string content:text
 ```
 
 The above command generates the following important files:
@@ -223,7 +223,7 @@ gem 'bcrypt'
   well.
 
 ```
-rails generate User name:string email:uniq password:digest
+rails generate scaffold User name:string email:uniq password:digest
 ```
 
 After running the migration and opening `http://localhost:3000/users`,
@@ -254,10 +254,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by_email(params[:email)
+    user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to root_url, notce: 'Logged in!'
+      redirect_to root_url, notice: 'Logged in!'
     else
       flash[:alert] = 'Email or password is invalid'
       render 'new'
@@ -299,7 +299,7 @@ end
 
 <h1>Login</h1>
 
-<%= form_with sessions_path, remote: false do |f| %>
+<%= form_with url: sessions_path, remote: false do |f| %>
   <div class="field">
     <%= f.label :email %>
     <%= f.email_field :email %>
@@ -364,14 +364,14 @@ end
   <body>
     <% if current_user %>
       Logged in as <%= current_user.email %>
-      <%= link_to 'Log Out', logout_path %>
+      <%= link_to 'Log Out', logout_path, method: :delete %>
     <% else %>
       <%= link_to 'Sign Up', signup_path %>
       <%= link_to 'Log In', login_path %>
     <% end %>
-  </body>
 
-  <%= yield %>
+    <%= yield %>
+  </body>
 </html>
 ```
 
@@ -393,7 +393,7 @@ read, update, destroy an article or not.
 - Add a migration to add new columns and migrate.
 
 ```
-rails generate migration add_authorization_columns_articles_table user_id:integer public:boolean
+rails generate migration add_authorization_columns_to_articles user_id:integer public:boolean
 ```
 
 - Add a radio button in `app/views/articles/_form.html.erb` for `public`
@@ -499,6 +499,7 @@ class Ability
     # All users
     # Can read public articles
     can :show, Article, public: true
+    can :index, Article
 
     # Additional permissions for logged in users
     if user.present?
