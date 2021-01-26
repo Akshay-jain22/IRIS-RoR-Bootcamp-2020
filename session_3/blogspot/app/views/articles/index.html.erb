@@ -20,9 +20,14 @@
         <td><%= article.topic %></td>
         <td><%= article.tags %></td>
         <td><%= article.content %></td>
+        <% if article.public %>
+          <td><%= link_to 'Show', article %></td>
+        <% end %>
         <% begin %>
-          <% if article.id == current_user.id %>
-            <td><%= link_to 'Show', article %></td>
+          <% if article.user_id == current_user.id || current_user.admin %>
+            <% if !article.public %>
+              <td><%= link_to 'Show', article %></td>
+            <% end %>
             <td><%= link_to 'Edit', edit_article_path(article) %></td>
             <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>

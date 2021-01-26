@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
@@ -25,6 +27,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.private_articles_remaining = 5
 
     respond_to do |format|
       if @user.save
@@ -69,6 +72,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
     end
 end

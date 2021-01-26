@@ -37,10 +37,20 @@ class Ability
     can :show, Article, public: true
     can :index, Article
 
+    # Adding Authorization to Users
+    can :index, User
+    can :show, User
+    can :new, User
+    can :create, User
+
+    user ||= User.new # guest user (not logged in)
+    
     # Additional permissions for logged in users
     if user.present?
-      # Can read private articles
-      can :show, Article, public: false
+      # Read Private Articles under limit
+      if user.private_articles_remaining>0
+        can :show, Article, public: false
+      end
 
       # Can create articles
       can :new, Article
@@ -52,6 +62,25 @@ class Ability
 
       # Can destroy their own articles
       can :destroy, Article, user_id: user.id
+
+      # Can edit their own account
+      can :edit, User, id: user.id
+      can :update, User, id: user.id
+
+      # Can destroy their own account
+      can :destroy, User, id: user.id
+
+    end
+
+    if user.admin?
+      # Admin can Manage any Article or User Details
+      can :edit, Article
+      can :update, Article
+      can :destroy, Article
+
+      can :edit, User
+      can :update, User
+      can :destroy, User
     end
 
   end

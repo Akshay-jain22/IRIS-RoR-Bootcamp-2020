@@ -12,6 +12,11 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
+    if !@article.public && !current_user.admin && @article.user_id != session[:user_id]
+      session[:private_articles_remaining] -= 1
+    elsif @article.user_id != session[:user_id]
+      redirect_to root_url, notice: "Private Articles Limit Exceeded"
+    end
   end
 
   # GET /articles/new

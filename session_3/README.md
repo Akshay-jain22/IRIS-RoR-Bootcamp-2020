@@ -36,11 +36,11 @@ Rails.application.routes.draw do
 We can add routes related to our models (called _resources_ in routing
 terminology) using the keyword `resources`. This defines five essential
 actions:
-- Create one record with `new` and `create`
-- Read one record with `show`
-- Update one record with `edit` and `update`
-- Delete one record with `destroy`
-- Read all records with `index`
+- Create one record with `new` and `create`.
+- Read one record with `show`.
+- Update one record with `edit` and `update`.
+- Delete one record with `destroy`.
+- Read all records with `index`.
 
 For example:
 
@@ -77,8 +77,8 @@ end
 
 Here, we have defined a publish action as a special case for update.
 
-- [The Rails Router](http://tutorials.jumpstartlab.com/topics/routes/router.html)
 - [Rails Routing from the Outside In](https://guides.rubyonrails.org/routing.html#crud-verbs-and-actions)
+- [The Rails Router](http://tutorials.jumpstartlab.com/topics/routes/router.html)
 
 ## Controllers
 
@@ -271,6 +271,8 @@ class SessionsController < ApplicationController
 end
 ```
 
+- [How Rails Sessions Work](https://www.justinweiss.com/articles/how-rails-sessions-work/)
+
 As you can see we are using `session[:user_id]` to store the logged in
 user id.
 
@@ -367,7 +369,7 @@ end
       <%= link_to 'Log Out', logout_path, method: :delete %>
     <% else %>
       <%= link_to 'Sign Up', signup_path %>
-      <%= link_to 'Log In', login_path %>
+      <%= link_to 'Log In', login_path, method: :delete %>
     <% end %>
 
     <%= yield %>
@@ -497,6 +499,8 @@ class Ability
 
   def initialize(user)
     # All users
+    can :index, Article
+    
     # Can read public articles
     can :show, Article, public: true
     can :index, Article
