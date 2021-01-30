@@ -1,0 +1,31 @@
+<div class="jumbotron">
+  <h1 class="display-4">
+    <%= @article.title %>
+  </h1>
+  <br/>
+
+  <p class="lead">
+    <strong>Topic:</strong>
+    <%= @article.topic %>
+  </p>
+
+  <p class="lead">
+    <strong>Tags:</strong>
+    <%= @article.tags %>
+  </p>
+
+  <hr class="my-4">
+
+  <p class="lead">
+    <%= @article.content %>
+  </p>
+  
+  <br/>
+
+  <% if can? :edit, @article %>
+    <%= link_to 'Edit', edit_article_path(@article), class:"btn btn-outline-secondary" %> |
+    <%= link_to 'Delete', @article, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-outline-secondary" %> | 
+  <% end %>
+  <%= link_to 'Back', articles_path, class:"btn btn-outline-secondary" %>
+</div>
+<br/>
