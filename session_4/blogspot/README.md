@@ -41,9 +41,10 @@
 ![](screenshots/13.png)
 
 ### Are you an ADMIN?, look what it got for U :-
-![](screenshots/15.png)
-
-### Don't forget to logout after you're done :-
 ![](screenshots/14.png)
 
-## Will Add more features soon :)
+### Don't forget to logout after you're done :-
+![](screenshots/15.png)
+
+### Now, you can download the articles and also upload cover images for them
+![](screenshots/16.png)

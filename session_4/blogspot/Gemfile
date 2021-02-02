@@ -63,3 +63,7 @@ gem 'cancancan'
 
 # Bootstrap Form
 gem 'bootstrap_form', '~> 4.0'
+
+# Generating PDF
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

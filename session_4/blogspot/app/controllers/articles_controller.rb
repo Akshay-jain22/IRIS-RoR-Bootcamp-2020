@@ -12,11 +12,24 @@ class ArticlesController < ApplicationController
   # GET /articles/1
   # GET /articles/1.json
   def show
-    flag = !@article.public && !current_user.admin && @article.user_id != session[:user_id]
-    if flag && session[:private_articles_remaining]>0
+    private_article_credit_needed = !@article.public && !current_user.admin && @article.user_id != session[:user_id]
+    if private_article_credit_needed && session[:private_articles_remaining]>0
       session[:private_articles_remaining] -= 1
-    elsif flag
+    elsif private_article_credit_needed
       redirect_to root_url, alert: "Private Articles Limit Exceeded"
+    else
+      respond_to do |format|
+        format.html
+        format.pdf do
+            render pdf: "Article No. #{@article.id}",
+            page_size: 'A4',
+            template: "articles/show.html.erb",
+            layout: "pdf.html",
+            orientation: "Portrait",
+            zoom: 1,
+            dpi: 72
+        end
+      end
     end
   end
 
@@ -74,6 +87,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :topic, :tags, :content, :public)
+      params.require(:article).permit(:title, :topic, :tags, :content, :public, :image)
     end
 end

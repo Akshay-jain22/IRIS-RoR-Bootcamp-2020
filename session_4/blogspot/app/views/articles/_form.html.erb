@@ -13,12 +13,13 @@
 
   <%= form.text_field :title, required: true %>
   <%= form.text_field :topic, required: true %>
+  <%= form.file_field :image, accept:'image/*' %>
   <%= form.text_field :tags %>
   <%= form.text_area :content, required: true %>
   <%= form.check_box :public, label: "Visibility : Public" %>
   <br/>
 
   <div class="text-center">
-    <%= form.submit "Submit", class: 'btn btn-primary' %>
+    <%= form.primary "Submit" %>
   </div>
 <% end %>
