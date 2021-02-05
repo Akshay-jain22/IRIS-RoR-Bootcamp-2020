@@ -1,14 +1,14 @@
-<% if @article.image.attached? %>
-  <div class="text-center">
-    <%= image_tag(@article.image, class: "img-fluid shadow-lg mb-5 rounded", style: "max-width:100%;", alt: "No Image Found") %>
-  </div>
-<% end %>
-
 <div class="jumbotron">
-  <h1 class="display-4">
+  <h1 class="display-4 text-center">
     <%= @article.title %>
   </h1>
   <br/>
+
+  <% if @article.image.attached? %>
+    <div class="text-center">
+      <%= image_tag(@article.image, class: "img-fluid shadow-lg mb-5 rounded", style: "max-width:100%;", alt: "No Image Found") %>
+    </div>
+  <% end %>
 
   <p class="lead">
     <strong>Topic:</strong>
